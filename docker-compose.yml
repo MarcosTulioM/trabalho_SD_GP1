@@ -36,4 +36,36 @@ services:
       - NAME=ISCCP2
     depends_on:
       - mqtt_broker
-      
+
+  mongo1:
+    build: ./mongo
+    container_name: mongo1
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo1:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo2:
+    build: ./mongo
+    container_name: mongo2
+    ports:
+      - 27018:27017
+    volumes:
+      - ./mongo2:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo3:
+    build: ./mongo
+    container_name: mongo3
+    ports:
+      - 27019:27017
+    volumes:
+      - ./mongo3:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
