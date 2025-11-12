@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mqtt_broker:
+    image: eclipse-mosquitto
+    container_name: mqtt_broker
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  carro1:
+    build: ./carro
+    environment:
+      - CAR_ID=1
+    depends_on:
+      - mqtt_broker
+  
+  carro2:
+    build: ./carro
+    environment:
+      - CAR_ID=2
+    depends_on:
+      - mqtt_broker
+
+  isccp1:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP1
+    depends_on:
+      - mqtt_broker
+
+  isccp2:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+      
