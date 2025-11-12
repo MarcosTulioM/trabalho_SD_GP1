@@ -11,7 +11,7 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     dados = json.loads(msg.payload.decode())
-    print(f"Recebido de {msg.topic}: {dados}")
+    print(f"Recebido de {msg.topic}: {dados}", flush=True)
 
 client = mqtt.Client()
 client.on_connect = on_connect

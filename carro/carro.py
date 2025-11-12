@@ -20,5 +20,5 @@ while True:
     dados = gerar_dados_pneu()
     topico = f"carro/{carro_id}/pneu"
     client.publish(topico, json.dumps(dados))
-    print(f"[carro {carro_id}] Publicado: {topico} -> {dados}")
+    print(f"[carro {carro_id}] Publicado: {topico} -> {dados}", flush=True)
     time.sleep(5)
