@@ -9,6 +9,19 @@ services:
     volumes:
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
+  ssacp:
+    build: ./ssacp
+    container_name: ssacp  
+    volumes:
+      - ./ssacp:/app      
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    environment:
+      - PYTHONUNBUFFERED=1 
+      - MONGO_URL=mongodb://root:example@mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=rs0&authSource=admin
+
   carro1:
     build: ./carro
     environment:
@@ -38,7 +51,7 @@ services:
       - mqtt_broker
 
   mongo1:
-    build: ./mongo
+    build: ./mongo           
     container_name: mongo1
     ports:
       - 27017:27017
@@ -49,7 +62,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
 
   mongo2:
-    build: ./mongo
+    build: ./mongo           
     container_name: mongo2
     ports:
       - 27018:27017
@@ -60,7 +73,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
 
   mongo3:
-    build: ./mongo
+    build: ./mongo          
     container_name: mongo3
     ports:
       - 27019:27017
@@ -69,3 +82,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+
+  ssvcp:
+    build: ./ssvcp
+    ports:
+      - "8000:8000"  # A porta externa para você acessar
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    environment:
+      - MONGO_URL=mongodb://root:example@mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=rs0&authSource=admin

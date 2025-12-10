@@ -1,24 +1,38 @@
 import paho.mqtt.client as mqtt
 import time
-import random
 import json
+import random
 import os
+from datetime import datetime
+
+CAR_ID = int(os.getenv("CAR_ID", 1))
+BROKER = "mqtt_broker"
+TOPIC = f"f1/carro{CAR_ID}/pneus"
 
 client = mqtt.Client()
-client.connect("mqtt_broker", 1883, 60)  #Container do Mosquitto no docker
 
-carro_id = os.environ.get("CAR_ID", "0")
-print(f"[carro {carro_id}] Iniciando publicador...", flush=True)
+# Espera o broker subir
+time.sleep(5) 
 
-def gerar_dados_pneu():
-    return {
-        "pressao": round(random.uniform(18.0, 22.0), 2),
-        "temperatura": round(random.uniform(70.0, 100.0), 2)
-    }
+try:
+    client.connect(BROKER, 1883, 60)
+    print(f"🏎️ Carro {CAR_ID} conectado! Enviando dados...")
+    
+    while True:
+        # Gera dados simulados
+        dados = {
+            "carro_id": CAR_ID,
+            "pressao": round(random.uniform(20.0, 30.0), 2),
+            "temperatura": round(random.uniform(80.0, 120.0), 1),
+            "desgaste": round(random.uniform(0.0, 100.0), 1),
+            "timestamp": datetime.now().isoformat()
+        }
+        
+        payload = json.dumps(dados)
+        client.publish(TOPIC, payload)
+        print(f"📤 Enviado: {payload}")
+        
+        time.sleep(5) # Envia a cada 5 segundos
 
-while True:
-    dados = gerar_dados_pneu()
-    topico = f"carro/{carro_id}/pneu"
-    client.publish(topico, json.dumps(dados))
-    print(f"[carro {carro_id}] Publicado: {topico} -> {dados}", flush=True)
-    time.sleep(5)
+except Exception as e:
+    print(f"Erro no carro: {e}")
