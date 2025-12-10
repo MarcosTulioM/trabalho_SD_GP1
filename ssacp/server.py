@@ -5,7 +5,6 @@ import os
 import time
 import sys
 
-# Imports diretos (sem try/except para vermos o erro real)
 import pneus_pb2
 import pneus_pb2_grpc
 
@@ -20,19 +19,19 @@ class PneuStorageService(pneus_pb2_grpc.PneuStorageServicer):
     def _conectar_mongo(self):
         while True:
             try:
-                print(f"⏳ Tentando conectar ao MongoDB em: {MONGO_URI} ...")
+                print(f"Tentando conectar ao MongoDB em: {MONGO_URI} ...")
                 client = pymongo.MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
                 client.server_info() # Força teste
                 self.db = client["f1_telemetry"]
                 self.collection = self.db["pneus"]
-                print(f"✅ SUCESSO! Conectado ao MongoDB: {client.server_info()['version']}")
+                print(f"SUCESSO! Conectado ao MongoDB: {client.server_info()['version']}")
                 break
             except Exception as e:
-                print(f"❌ Falha na conexão ({e}). Tentando novamente em 5s...")
+                print(f"Falha na conexão ({e}). Tentando novamente em 5s...")
                 time.sleep(5)
 
     def EnviarDadosPneu(self, request, context):
-        print(f"📩 Recebido dados do Carro {request.carro_id}")
+        print(f"Recebido dados do Carro {request.carro_id}")
         documento = {
             "carro_id": request.carro_id,
             "pressao": request.pressao,
@@ -44,7 +43,7 @@ class PneuStorageService(pneus_pb2_grpc.PneuStorageServicer):
             result = self.collection.insert_one(documento)
             return pneus_pb2.RespostaArmazenamento(sucesso=True, mensagem=f"Salvo ID: {result.inserted_id}")
         except Exception as e:
-            print(f"❌ Erro ao salvar: {e}")
+            print(f"Erro ao salvar: {e}")
             return pneus_pb2.RespostaArmazenamento(sucesso=False, mensagem=str(e))
 
 def serve():

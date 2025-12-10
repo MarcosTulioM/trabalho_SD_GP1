@@ -4,7 +4,6 @@ import json
 import os
 import sys
 
-# Importa os arquivos gRPC que você copiou
 import pneus_pb2
 import pneus_pb2_grpc
 
@@ -40,12 +39,12 @@ def on_message(client, userdata, msg):
         response = stub.EnviarDadosPneu(dados_grpc)
         
         if response.sucesso:
-            print(f"✅ Salvo no Mongo pelo SSACP! (Msg: {response.mensagem})")
+            print(f"Salvo no Mongo pelo SSACP! (Msg: {response.mensagem})")
         else:
-            print(f"⚠️ SSACP rejeitou: {response.mensagem}")
+            print(f"SSACP rejeitou: {response.mensagem}")
             
     except Exception as e:
-        print(f"❌ Erro ao processar mensagem: {e}")
+        print(f"Erro ao processar mensagem: {e}")
 
 # Configura o MQTT
 client = mqtt.Client()
@@ -54,7 +53,7 @@ client.on_message = on_message
 try:
     client.connect(MQTT_BROKER, 1883, 60)
     client.subscribe(MQTT_TOPIC)
-    print(f"👂 Ouvindo tópico: {MQTT_TOPIC}")
+    print(f"Ouvindo tópico: {MQTT_TOPIC}")
     client.loop_forever()
 except Exception as e:
     print(f"Erro fatal no MQTT: {e}")

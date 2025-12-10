@@ -1,0 +1,12 @@
+# Ignorar dados do banco
+mongo1/
+mongo2/
+mongo3/
+
+# Ignorar arquivos temporários do Python
+__pycache__/
+*.pyc
+
+# Ignorar ambientes virtuais (se houver)
+.venv/
+env/
