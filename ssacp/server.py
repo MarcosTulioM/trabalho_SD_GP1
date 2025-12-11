@@ -50,7 +50,7 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pneus_pb2_grpc.add_PneuStorageServicer_to_server(PneuStorageService(), server)
     server.add_insecure_port('[::]:50051')
-    print("🚀 Servidor SSACP gRPC rodando na porta 50051...")
+    print("Servidor SSACP gRPC rodando na porta 50051...")
     server.start()
     try:
         while True:
