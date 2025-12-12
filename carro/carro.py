@@ -30,7 +30,7 @@ try:
         
         payload = json.dumps(dados)
         client.publish(TOPIC, payload)
-        print(f"📤 Enviado: {payload}")
+        print(f"Enviado: {payload}")
         
         time.sleep(5) # Envia a cada 5 segundos
 
