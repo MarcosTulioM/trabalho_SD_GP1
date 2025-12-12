@@ -1,13 +1,16 @@
 FROM python:3.9-slim
 
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
+# Instala as dependências
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Expõe a porta do gRPC
-EXPOSE 50051
+RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. pneus.proto
 
-CMD ["python", "-u", "server.py"]
+# Inicia o servidor
+CMD ["python", "server.py"]

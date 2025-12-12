@@ -5,37 +5,48 @@ import random
 import os
 from datetime import datetime
 
-CAR_ID = int(os.getenv("CAR_ID", 1))
+# Pega o ID do Docker Compose
+CAR_ID = int(os.getenv("CAR_ID", 1)) 
 BROKER = "mqtt_broker"
 TOPIC = f"f1/carro{CAR_ID}/pneus"
 
-client = mqtt.Client()
-
-#Contador de volta
-contador_volta = 1
+client = mqtt.Client(f"CarroUnitario-{CAR_ID}")
 
 # Espera o broker subir
 time.sleep(5) 
 
 try:
-    client.connect(BROKER, 1883, 60)
-    print(f"Carro {CAR_ID} conectado! Enviando dados...")
+    conectado = False
+    while not conectado:
+        try:
+            client.connect(BROKER, 1883, 60)
+            conectado = True
+        except:
+            time.sleep(1)
+            
+    print(f"Carro {CAR_ID} conectado e pronto para a largada!")
+    
+    volta_atual = 0  
     
     while True:
+        volta_atual += 1
+        
         # Gera dados simulados
         dados = {
             "carro_id": CAR_ID,
             "pressao": round(random.uniform(20.0, 30.0), 2),
             "temperatura": round(random.uniform(80.0, 120.0), 1),
             "desgaste": round(random.uniform(0.0, 100.0), 1),
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(), # A vírgula está aqui!
+            "volta": volta_atual
         }
         
         payload = json.dumps(dados)
         client.publish(TOPIC, payload)
-        print(f"Enviado: {payload}")
+        print(f"Carro {CAR_ID} | Volta {volta_atual} | Enviado")
         
-        time.sleep(5) # Envia a cada 5 segundos
+        # Delay aleatório
+        time.sleep(5 + random.uniform(0, 2)) 
 
 except Exception as e:
     print(f"Erro no carro: {e}")

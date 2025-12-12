@@ -21,7 +21,7 @@ class PneuStorageService(pneus_pb2_grpc.PneuStorageServicer):
             try:
                 print(f"Tentando conectar ao MongoDB em: {MONGO_URI} ...")
                 client = pymongo.MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
-                client.server_info() # Força teste
+                client.server_info() 
                 self.db = client["f1_telemetry"]
                 self.collection = self.db["pneus"]
                 print(f"SUCESSO! Conectado ao MongoDB: {client.server_info()['version']}")
@@ -37,7 +37,8 @@ class PneuStorageService(pneus_pb2_grpc.PneuStorageServicer):
             "pressao": request.pressao,
             "temperatura": request.temperatura,
             "desgaste": request.desgaste,
-            "timestamp": request.timestamp
+            "timestamp": request.timestamp,
+            "volta": request.volta
         }
         try:
             result = self.collection.insert_one(documento)
@@ -47,7 +48,7 @@ class PneuStorageService(pneus_pb2_grpc.PneuStorageServicer):
             return pneus_pb2.RespostaArmazenamento(sucesso=False, mensagem=str(e))
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=24))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pneus_pb2_grpc.add_PneuStorageServicer_to_server(PneuStorageService(), server)
     server.add_insecure_port('[::]:50051')
     print("Servidor SSACP gRPC rodando na porta 50051...")
