@@ -11,6 +11,9 @@ TOPIC = f"f1/carro{CAR_ID}/pneus"
 
 client = mqtt.Client()
 
+#Contador de volta
+contador_volta = 1
+
 # Espera o broker subir
 time.sleep(5) 
 
