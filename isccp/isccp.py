@@ -9,7 +9,7 @@ import pneus_pb2_grpc
 
 # Configurações
 MQTT_BROKER = "mqtt_broker"
-MQTT_TOPIC = "f1/+/pneus" # O "+" é um curinga para pegar de qualquer carro
+MQTT_TOPIC = "f1/+/pneus"
 SSACP_HOST = os.getenv("SSACP_HOST", "ssacp:50051")
 
 print(f"🔌 Iniciando ISCCP conectando ao Broker: {MQTT_BROKER} e SSACP: {SSACP_HOST}")
@@ -22,7 +22,7 @@ stub = pneus_pb2_grpc.PneuStorageStub(channel)
 def on_message(client, userdata, msg):
     try:
         payload = msg.payload.decode()
-        print(f"📡 Recebido MQTT: {payload}")
+        print(f"Recebido MQTT: {payload}")
         
         dados_json = json.loads(payload)
         

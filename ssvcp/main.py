@@ -4,7 +4,7 @@ import os
 
 app = FastAPI()
 
-# Conexão com o Banco (Lê a variável de ambiente ou usa o padrão)
+# Conexão com o Banco 
 MONGO_URI = os.getenv("MONGO_URL", "mongodb://root:example@mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=rs0&authSource=admin")
 client = MongoClient(MONGO_URI)
 db = client["f1_telemetry"]
