@@ -36,6 +36,160 @@ services:
     depends_on:
       - mqtt_broker
 
+  carro3:
+    build: ./carro
+    environment:
+      - CAR_ID=3
+    depends_on:
+      - mqtt_broker
+  
+  carro4:
+    build: ./carro
+    environment:
+      - CAR_ID=4
+    depends_on:
+      - mqtt_broker
+
+  carro5:
+    build: ./carro
+    environment:
+      - CAR_ID=5
+    depends_on:
+      - mqtt_broker
+
+  carro6:
+    build: ./carro
+    environment:
+      - CAR_ID=6
+    depends_on:
+      - mqtt_broker
+  
+  carro7:
+    build: ./carro
+    environment:
+      - CAR_ID=7
+    depends_on:
+      - mqtt_broker
+
+  carro8:
+    build: ./carro
+    environment:
+      - CAR_ID=8
+    depends_on:
+      - mqtt_broker
+
+  carro9:
+    build: ./carro
+    environment:
+      - CAR_ID=9
+    depends_on:
+      - mqtt_broker
+
+  carro10:
+    build: ./carro
+    environment:
+      - CAR_ID=10
+    depends_on:
+      - mqtt_broker
+
+  carro11:
+    build: ./carro
+    environment:
+      - CAR_ID=11
+    depends_on:
+      - mqtt_broker
+
+  carro12:
+    build: ./carro
+    environment:
+      - CAR_ID=12
+    depends_on:
+      - mqtt_broker
+
+  carro13:
+    build: ./carro
+    environment:
+      - CAR_ID=13
+    depends_on:
+      - mqtt_broker
+
+  carro14:
+    build: ./carro
+    environment:
+      - CAR_ID=14
+    depends_on:
+      - mqtt_broker
+
+  carro15:
+    build: ./carro
+    environment:
+      - CAR_ID=15
+    depends_on:
+      - mqtt_broker
+
+  carro16:
+    build: ./carro
+    environment:
+      - CAR_ID=16
+    depends_on:
+      - mqtt_broker
+  
+  carro17:
+    build: ./carro
+    environment:
+      - CAR_ID=17
+    depends_on:
+      - mqtt_broker
+  
+  carro18:
+    build: ./carro
+    environment:
+      - CAR_ID=18
+    depends_on:
+      - mqtt_broker
+
+  carro19:
+    build: ./carro
+    environment:
+      - CAR_ID=19
+    depends_on:
+      - mqtt_broker
+
+  carro20:
+    build: ./carro
+    environment:
+      - CAR_ID=20
+    depends_on:
+      - mqtt_broker
+
+  carro21:
+    build: ./carro
+    environment:
+      - CAR_ID=21
+    depends_on:
+      - mqtt_broker
+
+  carro22:
+    build: ./carro
+    environment:
+      - CAR_ID=22
+    depends_on:
+      - mqtt_broker
+
+  carro23:
+    build: ./carro
+    environment:
+      - CAR_ID=23
+    depends_on:
+      - mqtt_broker
+
+  carro24:
+    build: ./carro
+    environment:
+      - CAR_ID=24
+    depends_on:
+      - mqtt_broker
+
   isccp1:
     build: ./isccp
     environment:
