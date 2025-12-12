@@ -240,7 +240,7 @@ services:
   ssvcp:
     build: ./ssvcp
     ports:
-      - "8000:8000"  # A porta externa para você acessar
+      - "8000:8000"  # Porta de acesso
     depends_on:
       - mongo1
       - mongo2

@@ -19,7 +19,7 @@ time.sleep(5)
 
 try:
     client.connect(BROKER, 1883, 60)
-    print(f"🏎️ Carro {CAR_ID} conectado! Enviando dados...")
+    print(f"Carro {CAR_ID} conectado! Enviando dados...")
     
     while True:
         # Gera dados simulados

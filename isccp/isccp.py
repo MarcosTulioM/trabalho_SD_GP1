@@ -12,7 +12,7 @@ MQTT_BROKER = "mqtt_broker"
 MQTT_TOPIC = "f1/+/pneus"
 SSACP_HOST = os.getenv("SSACP_HOST", "ssacp:50051")
 
-print(f"🔌 Iniciando ISCCP conectando ao Broker: {MQTT_BROKER} e SSACP: {SSACP_HOST}")
+print(f"Iniciando ISCCP conectando ao Broker: {MQTT_BROKER} e SSACP: {SSACP_HOST}")
 
 # Configura o canal gRPC para falar com o SSACP
 channel = grpc.insecure_channel(SSACP_HOST)
