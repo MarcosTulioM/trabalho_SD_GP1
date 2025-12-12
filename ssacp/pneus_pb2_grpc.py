@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from proto import pneus_pb2 as proto_dot_pneus__pb2
+import pneus_pb2 as pneus__pb2
 
 GRPC_GENERATED_VERSION = '1.76.0'
 GRPC_VERSION = grpc.__version__
@@ -18,7 +18,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + ' but the generated code in proto/pneus_pb2_grpc.py depends on'
+        + ' but the generated code in pneus_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -37,8 +37,8 @@ class PneuStorageStub(object):
         """
         self.EnviarDadosPneu = channel.unary_unary(
                 '/pneus.PneuStorage/EnviarDadosPneu',
-                request_serializer=proto_dot_pneus__pb2.DadosPneu.SerializeToString,
-                response_deserializer=proto_dot_pneus__pb2.RespostaArmazenamento.FromString,
+                request_serializer=pneus__pb2.DadosPneu.SerializeToString,
+                response_deserializer=pneus__pb2.RespostaArmazenamento.FromString,
                 _registered_method=True)
 
 
@@ -57,8 +57,8 @@ def add_PneuStorageServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'EnviarDadosPneu': grpc.unary_unary_rpc_method_handler(
                     servicer.EnviarDadosPneu,
-                    request_deserializer=proto_dot_pneus__pb2.DadosPneu.FromString,
-                    response_serializer=proto_dot_pneus__pb2.RespostaArmazenamento.SerializeToString,
+                    request_deserializer=pneus__pb2.DadosPneu.FromString,
+                    response_serializer=pneus__pb2.RespostaArmazenamento.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -87,8 +87,8 @@ class PneuStorage(object):
             request,
             target,
             '/pneus.PneuStorage/EnviarDadosPneu',
-            proto_dot_pneus__pb2.DadosPneu.SerializeToString,
-            proto_dot_pneus__pb2.RespostaArmazenamento.FromString,
+            pneus__pb2.DadosPneu.SerializeToString,
+            pneus__pb2.RespostaArmazenamento.FromString,
             options,
             channel_credentials,
             insecure,

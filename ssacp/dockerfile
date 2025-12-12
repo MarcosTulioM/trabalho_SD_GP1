@@ -1,16 +1,12 @@
 FROM python:3.9-slim
 
 ENV PYTHONUNBUFFERED=1
-
 WORKDIR /app
 
-# Instala as dependências
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. pneus.proto
-
-# Inicia o servidor
-CMD ["python", "server.py"]
+CMD sh -c "python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. pneus.proto && python server.py"
