@@ -259,91 +259,91 @@ services:
   isccp3:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP3
     depends_on:
       - mqtt_broker
   
   isccp4:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP4
     depends_on:
       - mqtt_broker
   
   isccp5:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP5
     depends_on:
       - mqtt_broker
   
   isccp6:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP6
     depends_on:
       - mqtt_broker
   
   isccp7:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP7
     depends_on:
       - mqtt_broker
   
   isccp8:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP8
     depends_on:
       - mqtt_broker
   
   isccp9:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP9
     depends_on:
       - mqtt_broker
  
   isccp10:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP10
     depends_on:
       - mqtt_broker
  
   isccp11:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP11
     depends_on:
       - mqtt_broker
   
   isccp12:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP12
     depends_on:
       - mqtt_broker
   
   isccp13:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP13
     depends_on:
       - mqtt_broker
  
   isccp14:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP14
     depends_on:
       - mqtt_broker
  
   isccp15:
     build: ./isccp
     environment:
-      - NAME=ISCCP2
+      - NAME=ISCCP15
     depends_on:
       - mqtt_broker
 
