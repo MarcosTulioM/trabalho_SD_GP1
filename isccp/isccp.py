@@ -16,7 +16,7 @@ except ImportError as e: # Capture o erro exato
 
 # Configurações
 MQTT_BROKER = "mqtt_broker"
-MQTT_TOPIC = "f1/+/pneus" 
+MQTT_TOPIC = "$share/grupo_isccp/f1/+/pneus"
 SSACP_HOST = os.getenv("SSACP_HOST", "ssacp:50051")
 
 print(f"Iniciando ISCCP conectando ao Broker: {MQTT_BROKER} e SSACP: {SSACP_HOST}")

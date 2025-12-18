@@ -22,6 +22,8 @@ services:
       - PYTHONUNBUFFERED=1 
       - MONGO_URL=mongodb://root:example@mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=rs0&authSource=admin
 
+# Carros
+
   carro1:
     build: ./carro
     container_name: carro1
@@ -238,19 +240,99 @@ services:
     depends_on:
       - mqtt_broker
 
+# Torres (ISSCP)
+
   isccp1:
     build: ./isccp
     environment:
       - NAME=ISCCP1
     depends_on:
       - mqtt_broker
+  isccp2:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp3:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp4:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp5:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp6:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp7:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp8:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp9:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp10:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp11:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp12:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp13:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp14:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
+  isccp15:
+    build: ./isccp
+    environment:
+      - NAME=ISCCP2
+    depends_on:
+      - mqtt_broker
 
-  #isccp2:
-    #build: ./isccp
-    #environment:
-    #  - NAME=ISCCP2
-    #depends_on:
-    #  - mqtt_broker
 
   mongo1:
     build: ./mongo           
