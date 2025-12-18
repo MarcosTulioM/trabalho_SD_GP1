@@ -29,7 +29,12 @@ try:
     volta_atual = 0  
     
     while True:
-        volta_atual += 1
+
+        # Simulação das voltas de uma corrida
+        if volta_atual < 16 :
+            volta_atual += 1
+        else:
+            volta_atual = 0
         
         # Gera dados simulados
         dados = {

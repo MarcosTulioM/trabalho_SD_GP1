@@ -245,12 +245,12 @@ services:
     depends_on:
       - mqtt_broker
 
-  isccp2:
-    build: ./isccp
-    environment:
-      - NAME=ISCCP2
-    depends_on:
-      - mqtt_broker
+  #isccp2:
+    #build: ./isccp
+    #environment:
+    #  - NAME=ISCCP2
+    #depends_on:
+    #  - mqtt_broker
 
   mongo1:
     build: ./mongo           
@@ -295,3 +295,36 @@ services:
       - mongo3
     environment:
       - MONGO_URL=mongodb://root:example@mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=rs0&authSource=admin
+    restart: on-failure
+
+  mongo-init:
+    image: mongo:latest
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    restart: "no"
+    command: >
+      bash -c "
+      echo 'Aguardando os servidores Mongo subirem...' &&
+      sleep 10 &&
+      mongosh --host mongo1:27017 -u root -p example --authenticationDatabase admin --eval '
+        try {
+          rs.initiate({
+            _id: \"rs0\",
+            members: [
+              { _id: 0, host: \"mongo1:27017\" },
+              { _id: 1, host: \"mongo2:27017\" },
+              { _id: 2, host: \"mongo3:27017\" }
+            ]
+          });
+          print(\"Replica Set INICIADO com sucesso!\");
+        } catch (e) {
+          if (e.codeName === \"AlreadyInitialized\") {
+            print(\"Replica Set JA EXISTE. Nenhuma acao necessaria.\");
+          } else {
+            print(\"Erro ao iniciar: \" + e);
+          }
+        }
+      '
+      "
