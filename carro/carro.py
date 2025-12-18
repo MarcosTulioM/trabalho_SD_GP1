@@ -42,7 +42,7 @@ try:
             "pressao": round(random.uniform(20.0, 30.0), 2),
             "temperatura": round(random.uniform(80.0, 120.0), 1),
             "desgaste": round(random.uniform(0.0, 100.0), 1),
-            "timestamp": datetime.now().isoformat(), # A vírgula está aqui!
+            "timestamp": datetime.now().isoformat(), 
             "volta": volta_atual
         }
         
