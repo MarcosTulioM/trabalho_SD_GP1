@@ -48,7 +48,7 @@ class PneuStorageService(pneus_pb2_grpc.PneuStorageServicer):
             return pneus_pb2.RespostaArmazenamento(sucesso=False, mensagem=str(e))
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
     pneus_pb2_grpc.add_PneuStorageServicer_to_server(PneuStorageService(), server)
     server.add_insecure_port('[::]:50051')
     print("Servidor SSACP gRPC rodando na porta 50051...")
