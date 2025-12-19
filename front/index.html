@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Sistema de Telemetria</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #121212; color: #fff; padding: 20px; }
+        h1 { text-align: center; color: #e10600; text-transform: uppercase; letter-spacing: 2px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        
+        .card { background: #1e1e1e; border-radius: 8px; padding: 15px; border-left: 5px solid #444; transition: transform 0.2s; }
+        .card:hover { transform: scale(1.02); }
+        
+        .car-title { font-size: 1.2em; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .data-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9em; }
+        .label { color: #888; }
+        
+        /* Cores dinâmicas */
+        .status-ok { border-color: #00ff00; }
+        .status-warn { border-color: #ffa500; }
+        .status-danger { border-color: #ff0000; box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+
+        .loading { text-align: center; margin-top: 20px; color: #666; }
+    </style>
+</head>
+<body>
+
+    <h1>Monitoramento F1 - Live</h1>
+    <div id="loading" class="loading">Aguardando dados da API (SSVCP)...</div>
+    <div id="car-grid" class="grid"></div>
+
+    <script>
+        // Mapa para guardar o último estado de cada carro
+        const carDataMap = {};
+
+        async function fetchData() {
+            try {
+                // Consome a API do SSVCP
+                const response = await fetch('http://localhost:8000/pneus');
+                const data = await response.json();
+                
+                const loading = document.getElementById('loading');
+                if(data.length > 0) loading.style.display = 'none';
+
+                data.forEach(reading => {
+                    carDataMap[reading.carro_id] = reading;
+                });
+
+                renderGrid();
+            } catch (error) {
+                console.error("Erro ao buscar dados:", error);
+                document.getElementById('loading').innerText = "Erro ao conectar com SSVCP (localhost:8000)";
+            }
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('car-grid');
+            grid.innerHTML = ''; 
+
+            // Ordena por ID do carro (1 a 24)
+            const sortedCarIds = Object.keys(carDataMap).sort((a, b) => parseInt(a) - parseInt(b));
+
+            sortedCarIds.forEach(id => {
+                const info = carDataMap[id];
+                
+                // Lógica de Alerta Visual
+                let statusClass = 'status-ok';
+                if (info.temperatura > 115 || info.desgaste > 80) statusClass = 'status-danger';
+                else if (info.temperatura > 105 || info.desgaste > 60) statusClass = 'status-warn';
+
+                const card = document.createElement('div');
+                card.className = `card ${statusClass}`;
+                card.innerHTML = `
+                    <div class="car-title">
+                        <span>🏎️ Carro ${info.carro_id}</span>
+                        <span style="font-size:0.8em">V.${info.volta}</span>
+                    </div>
+                    <div class="data-row"><span class="label">Temp:</span> <b>${info.temperatura.toFixed(1)}°C</b></div>
+                    <div class="data-row"><span class="label">Pressão:</span> <b>${info.pressao.toFixed(2)} psi</b></div>
+                    <div class="data-row"><span class="label">Desgaste:</span> <b>${info.desgaste.toFixed(1)}%</b></div>
+                    <div style="font-size:0.7em; color:#555; margin-top:5px; text-align:right">${info.timestamp.split('T')[1].split('.')[0]}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Atualiza a cada 2 segundos
+        setInterval(fetchData, 2000);
+        fetchData();
+    </script>
+</body>
+</html>

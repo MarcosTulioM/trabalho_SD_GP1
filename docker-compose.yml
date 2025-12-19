@@ -393,6 +393,17 @@ services:
       - MONGO_URL=mongodb://root:example@mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=rs0&authSource=admin
     restart: on-failure
 
+  frontend:
+    image: nginx:alpine
+    container_name: frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./front:/usr/share/nginx/html
+    depends_on:
+      - ssvcp
+
+
   mongo-init:
     image: mongo:latest
     depends_on:
